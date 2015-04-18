@@ -4,7 +4,7 @@ class RespondersController < ApplicationController
     if @responder.save
       render json: {responder: @responder.as_json}
     else
-      # Error
+      render json: {message: @responder.errors.messages}, status: 422
     end
   end
   
