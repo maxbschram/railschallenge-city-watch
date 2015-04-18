@@ -4,6 +4,7 @@ class Responder < ActiveRecord::Base
   
   validates :capacity, presence: true, inclusion: 1..5
   validates :name, presence: true, uniqueness: true
+  validates :type, presence: true
   
   
   def as_json
