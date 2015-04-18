@@ -3,6 +3,7 @@ class Responder < ActiveRecord::Base
   self.inheritance_column = nil
   
   validates :capacity, presence: true, inclusion: 1..5
+  validates :name, presence: true, uniqueness: true
   
   
   def as_json
