@@ -2,7 +2,7 @@ class Responder < ActiveRecord::Base
   # Disable STI to allow use of 'type' column
   self.inheritance_column = nil
   
-  validates :capacity, inclusion: 1..5
+  validates :capacity, presence: true, inclusion: 1..5
   
   
   def as_json
