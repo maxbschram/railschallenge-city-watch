@@ -22,16 +22,22 @@ class Emergency < ActiveRecord::Base
     ['Fire', 'Police', 'Medical'].each do |type|
       dispatch_responder_type(type)
     end
-   
   end
   
   def dispatch_responder_type(type)
     while Responder.responders_capacity(type)[3] != 0 && dispatched_capacity(type) < send(type_to_severity_symbol(type))
-      responder = Responder.where(type: type, emergency: nil, on_duty: true).order(capacity: :desc).where("capacity <= ?", send(type_to_severity_symbol(type)) - dispatched_capacity(type)).first
+      possible_responders = Responder.where(type: type, emergency: nil, on_duty: true).where("capacity <= ?", send(type_to_severity_symbol(type)) - dispatched_capacity(type))
+      responder = possible_responders.first
+      responder = possible_responders.order(capacity: :desc).first unless possible_responders.empty?
+
       if responder.nil?
-        responder = Responder.where(type: type, emergency: nil).order(capacity: :desc).first
+        #responder = Responder.where(type: type, emergency: nil).order(capacity: :desc).first
       end 
       responder.update_attribute(:emergency, self)        
+    end
+    
+    if dispatched_capacity(type) < send(type_to_severity_symbol(type))
+      update_attribute(:full_response, false)
     end
   end
   

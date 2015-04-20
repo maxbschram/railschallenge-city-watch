@@ -1,11 +1,12 @@
 class EmergenciesController < ApplicationController
   def create
-    emergency = Emergency.new(create_params)
+    @emergency = Emergency.new(create_params)
     
-    if emergency.save
-      render json: {emergency: emergency.as_json}, status: 201
+    if @emergency.save
+      @responders = @emergency.responders
+      render file: 'emergencies/emergency.json', status: 201
     else
-      render json: {message: emergency.errors.messages}, status: 422
+      render json: {message: @emergency.errors.messages}, status: 422
     end  
     
     rescue ActionController::UnpermittedParameters => e
