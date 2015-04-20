@@ -31,6 +31,10 @@ class EmergenciesController < ApplicationController
       render json: {message: e.message}, status: 422
   end
   
+  def index
+    render json: {emergencies: Emergency.all.as_json, full_responses: [Emergency.where(full_response: true).count, Emergency.count]}
+  end
+  
   def edit
     render file: 'public/404.json', status: :not_found
   end
