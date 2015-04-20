@@ -13,7 +13,11 @@ class RespondersController < ApplicationController
   end
   
   def index
-    render json: {responders: Responder.all.as_json}
+    if params[:show] == 'capacity'
+      render file: 'responders/capacity.json'
+    else
+      render json: {responders: Responder.all.as_json}
+    end
   end
   
   def update

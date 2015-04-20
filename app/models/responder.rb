@@ -12,4 +12,11 @@ class Responder < ActiveRecord::Base
     super(only: [:emergency_code, :type, :name, :capacity, :on_duty])
   end
   
+  def self.responders_capacity(type)
+    [Responder.where(type: type).sum('capacity'),
+      Responder.where(type: type, emergency: nil).sum('capacity'),
+      Responder.where(type: type, on_duty: true).sum('capacity'),
+      Responder.where(type: type, emergency: nil, on_duty: true).sum('capacity')]
+  end
+  
 end
