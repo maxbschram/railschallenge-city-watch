@@ -30,6 +30,18 @@ class EmergenciesController < ApplicationController
       render json: {message: e.message}, status: 422
   end
   
+  def edit
+    render file: 'public/404.json', status: :not_found
+  end
+  
+  def new
+    render file: 'public/404.json', status: :not_found
+  end
+  
+  def destroy
+    render file: 'public/404.json', status: :not_found
+  end
+  
   private
   
   def create_params
