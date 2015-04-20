@@ -3,7 +3,7 @@ class RespondersController < ApplicationController
     responder = Responder.new(create_params)
     
     if responder.save
-      render json: {responder: responder.as_json}
+      render json: {responder: responder.as_json}, status: 201
     else
       render json: {message: responder.errors.messages}, status: 422
     end  
