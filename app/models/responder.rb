@@ -6,6 +6,8 @@ class Responder < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
   validates :type, presence: true
   
+  belongs_to :emergency
+  
   def as_json
     super(only: [:emergency_code, :type, :name, :capacity, :on_duty])
   end
