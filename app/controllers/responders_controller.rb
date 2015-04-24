@@ -7,9 +7,6 @@ class RespondersController < ApplicationController
     else
       render json: { message: @responder.errors.messages }, status: 422
     end
-
-    rescue ActionController::UnpermittedParameters => e
-      render json: { message: e.message }, status: 422
   end
 
   def index
@@ -26,9 +23,6 @@ class RespondersController < ApplicationController
     @responder = Responder.find_by(name: params[:id])
     @responder.update_attributes(update_params)
     render "responders/show"
-    
-    rescue ActionController::UnpermittedParameters => e
-      render json: { message: e.message }, status: 422
   end
 
   def edit

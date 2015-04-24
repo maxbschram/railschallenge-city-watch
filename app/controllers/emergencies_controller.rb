@@ -4,13 +4,10 @@ class EmergenciesController < ApplicationController
 
     if @emergency.save
       @responders = @emergency.responders
-      render 'emergencies/create', status: 201
+      render status: 201
     else
       render json: { message: @emergency.errors.messages }, status: 422
     end
-
-    rescue ActionController::UnpermittedParameters => e
-      render json: { message: e.message }, status: 422
   end
 
   def show
@@ -26,9 +23,6 @@ class EmergenciesController < ApplicationController
     emergency = Emergency.find_by(code: params[:id])
     emergency.update_attributes(update_params)
     render json: { emergency: emergency.as_json }
-
-    rescue ActionController::UnpermittedParameters => e
-      render json: { message: e.message }, status: 422
   end
 
   def index
