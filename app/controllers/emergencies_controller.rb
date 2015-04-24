@@ -4,7 +4,7 @@ class EmergenciesController < ApplicationController
 
     if @emergency.save
       @responders = @emergency.responders
-      render file: 'emergencies/create.json', status: 201
+      render 'emergencies/create', status: 201
     else
       render json: { message: @emergency.errors.messages }, status: 422
     end
@@ -32,7 +32,7 @@ class EmergenciesController < ApplicationController
   end
 
   def index
-    render file: 'emergencies/index.json'
+    @emergencies = Emergency.all
   end
 
   def edit
