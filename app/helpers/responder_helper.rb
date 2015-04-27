@@ -7,4 +7,8 @@ module ResponderHelper
     a << ResponderQuery.new.available_and_on_duty(type: type)
     a.map(&:capacity)
   end
+
+  def available_and_on_duty_responders?(type)
+    ResponderQuery.new.available_and_on_duty(type: type).capacity > 0
+  end
 end
